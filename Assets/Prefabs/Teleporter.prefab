@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 3509266601156820793}
   - component: {fileID: 8521812267171898889}
   - component: {fileID: 7537729865017687741}
+  - component: {fileID: 8970213181742080699}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -142,6 +143,20 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &8970213181742080699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3235815143239016855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dedbf22e74f4004387a21c94484e2ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInteract: {fileID: 0}
+  finalDoorPosition: {fileID: 4857721359310444828}
 --- !u!1 &4543374306048290705
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,6 +167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8369012989193569966}
   - component: {fileID: 5777435993092454239}
+  - component: {fileID: 4428724133088348226}
   m_Layer: 0
   m_Name: TeleporterCollider
   m_TagString: Untagged
@@ -189,12 +205,25 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4428724133088348226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4543374306048290705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 670f838f9c2898c4999d173fc139a688, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teleportLocation: {fileID: 0}
 --- !u!1 &4857721359310444828
 GameObject:
   m_ObjectHideFlags: 0

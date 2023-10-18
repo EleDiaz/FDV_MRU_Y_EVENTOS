@@ -12,19 +12,21 @@ public class PlayerInteract : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    void OnCollisionTrigger(Collision collision) {
+    void OnCollisionEnter(Collision collision) {
+
+        Debug.Log("Collision");
+
         if (collision.gameObject.tag == PLAYER_TAG) {
             trigger.Invoke();
         }
     }
 }
-

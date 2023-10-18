@@ -24,10 +24,12 @@ public class DoorMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (_openingDoor) {
+            transform.Translate((finalDoorPosition.transform.position - transform.position).normalized * Time.deltaTime);
+        }
     }
 
     void OpenDoor() {
-
+        _openingDoor = true;
     }
 }

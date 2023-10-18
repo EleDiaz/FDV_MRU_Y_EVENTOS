@@ -63,6 +63,7 @@ public class LocomotionController : MonoBehaviour {    /// <summary>
     }
 
     public void ToogleLockFullSpeed() {
+        Debug.Log("Toogle?");
         _lockFullSpeed = !_lockFullSpeed;
     }
 
