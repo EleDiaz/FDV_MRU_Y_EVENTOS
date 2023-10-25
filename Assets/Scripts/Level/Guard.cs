@@ -18,8 +18,10 @@ public class Guard : MonoBehaviour
         target = t;
     }
 
-    public void Recall() {
-        Debug.Log("Se destruye");
+    // NOTE: This is a tricky function to be linked into an event. Bcs at the end of it the object 
+    // no longer will live so we need to unlink function to the event dispatcher.
+    public void Recall(Guards guards) {
+        guards.withDraw -= Recall;
         Destroy(gameObject);
     }
 

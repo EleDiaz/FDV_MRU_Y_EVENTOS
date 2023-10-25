@@ -32,7 +32,7 @@ public class UIScore : MonoBehaviour
     // We dont really need _score, in this case because we keep simple, but in other cases a better isolation around the score properties could be done.
     void UpdateScores(int _score)
     {
-        _text.text = _gameplay.Score.ToString() + " / " + _gameplay.MaxScore.ToString();
+        _text.text = _gameplay.Score.ToString(); // + " / " + _gameplay.MaxScore.ToString();
     }
 
 }

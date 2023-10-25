@@ -16,17 +16,15 @@ public class Guards : MonoBehaviour {
 
     public float spawnRate = 3f;
 
-    public delegate void WithDraw();
+    public delegate void WithDraw(Guards guards);
 
     public event WithDraw withDraw;
 
 
     void OnTriggerEnter(Collider collision) {
-        Debug.Log("entramos");
-        Debug.Log(outside);
         if (collision.gameObject == watchOver) {
             outside = false;
-            withDraw();
+            withDraw?.Invoke(this);
         }
     }
 
@@ -34,6 +32,7 @@ public class Guards : MonoBehaviour {
         if (collision.gameObject == watchOver) {
             outside = true;
             StartCoroutine(Spawner());
+            // SpawnGuard();
         }
     }
 
@@ -47,8 +46,8 @@ public class Guards : MonoBehaviour {
     }
 
     IEnumerator Spawner() {
+        yield return new WaitForSeconds(spawnRate);
         if (outside) {
-            yield return new WaitForSeconds(spawnRate);
             SpawnGuard();
             yield return Spawner();
         }
