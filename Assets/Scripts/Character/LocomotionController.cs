@@ -2,21 +2,16 @@ using System.Collections;
 using System;
 using UnityEngine;
 
-public class LocomotionController : MonoBehaviour {    /// <summary>
+public class LocomotionController : MonoBehaviour {
     /// <summary>
     /// Max walk speed
     /// </summary>
-    public float maxWalkSpeed = 1.0f;
+    public float walkSpeed = 1.0f;
 
     /// <summary>
     /// Max run speed
     /// </summary>
-    public float maxRunSpeed = 2.0f;
-
-    /// <summary>
-    /// Acceleration to reach a speed, it is used on the blend animations
-    /// </summary>
-    public float acceleration = 0.5f;
+    public float runSpeed = 2.0f;
 
     /// <summary>
     ///
@@ -37,10 +32,8 @@ public class LocomotionController : MonoBehaviour {    /// <summary>
 
     private bool _isInAir = false;
     private bool _isSprinting = false;
-    private Vector2 _lerpMovementDirection = Vector2.zero;
     private Vector2 _movementDirection = Vector2.zero;
     private Vector2 _movementDirectionBeforeJump = Vector2.zero;
-    private Quaternion _lastHeadOrientation = Quaternion.identity;
     private Rigidbody _rigidbody;
     private CameraController _cameraController;
     private float _lastCameraCheckTime = 0.0f;
@@ -63,7 +56,6 @@ public class LocomotionController : MonoBehaviour {    /// <summary>
     }
 
     public void ToogleLockFullSpeed() {
-        Debug.Log("Toogle?");
         _lockFullSpeed = !_lockFullSpeed;
     }
 
@@ -72,56 +64,37 @@ public class LocomotionController : MonoBehaviour {    /// <summary>
         UpdateGrounding();
         //UpdatePosition();
 
-        var auxMaxSpeed = _isSprinting ? maxRunSpeed : maxWalkSpeed;
+        var auxMaxSpeed = _isSprinting ? runSpeed : walkSpeed;
         if (_lockFullSpeed) {
-            auxMaxSpeed = maxRunSpeed;
+            auxMaxSpeed = runSpeed;
         }
-        var new_pos = _movementDirection.normalized * auxMaxSpeed * Time.deltaTime;
+        var inputSpeed = _movementDirection.normalized * auxMaxSpeed;
 
         if (!_isInAir)
         {
-            Move(new_pos);
+            Move(inputSpeed);
         }
         else if (_isInAir)
         {
-            Move(new_pos * airControl + _movementDirectionBeforeJump);
+            Move(inputSpeed * airControl + _movementDirectionBeforeJump);
         }
     }
 
-    private void Move(Vector2 movementDirection)
+    private void Move(Vector2 inputSpeed)
     {
-        var moveDirection = transform.rotation * new Vector3(movementDirection.x, 0.0f, movementDirection.y);
-        _rigidbody.MovePosition(transform.position + moveDirection);
+        _rigidbody.velocity = transform.rotation * new Vector3(inputSpeed.x, _rigidbody.velocity.y, inputSpeed.y);
 
         // Automatic rotation after X seconds
         if ((Math.Abs(_movementDirection.magnitude) > TOLERANCE || Time.time - _lastCameraCheckTime > timeToResetCamera) &&
             !_isInAir)
         {
-            transform.rotation = Quaternion.Lerp(transform.rotation.normalized, _cameraController.yawRotation,
-                rotationSpeed * Time.deltaTime);
+            _rigidbody.MoveRotation(Quaternion.Lerp(_rigidbody.rotation.normalized, _cameraController.yawRotation, rotationSpeed * Time.deltaTime));
+            // transform.rotation = Quaternion.Lerp(transform.rotation.normalized, _cameraController.yawRotation, rotationSpeed * Time.deltaTime);
 
             if (Math.Abs(Quaternion.Angle(transform.rotation, _cameraController.yawRotation)) < TOLERANCE)
             {
                 _lastCameraCheckTime = Time.time;
             }
-        }
-    }
-
-    private void UpdatePosition()
-    {
-        Vector3 movement = Vector3.zero;
-        // Braking
-        if (_movementDirection.magnitude == 0.0f && !_isInAir)
-        {
-            return;
-        }
-        // We are Accelerating in some way by the user
-        else if (!_isInAir)
-        {
-            var auxMaxSpeed = _isSprinting ? maxRunSpeed : maxWalkSpeed;
-            var new_pos = _movementDirection.normalized * auxMaxSpeed * Time.deltaTime;
-
-            _rigidbody.MovePosition(transform.position + new Vector3(new_pos.x, 0.0f, new_pos.y));
         }
     }
 

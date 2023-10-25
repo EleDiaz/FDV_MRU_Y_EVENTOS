@@ -69,7 +69,6 @@ public class CameraController : MonoBehaviour
 
     void OnZoom(float delta)
     {
-        Debug.Log("Zoom");
         distance = Mathf.Clamp(zoomSpeed * delta + distance, minDistance, maxDistance);
     }
 
@@ -110,12 +109,11 @@ public class CameraController : MonoBehaviour
             transform.position +
             -Vector3.down * _cameraHeight +
             _currentRotation * (-Vector3.forward * distance);
+    }
 
-        // if (bounder != null)
-        // {
-        //     CalculateBounds();
-        //     ConstraintToBounds();
-        // }
+    void Test() {
+        var ray = playerCamera.ScreenPointToRay(new Vector2(playerCamera.pixelWidth, playerCamera.pixelHeight) / 2);
+        Physics.Raycast(ray);
     }
 
     void LateUpdate()
@@ -125,12 +123,5 @@ public class CameraController : MonoBehaviour
             transform.position +
             -Vector3.down * _cameraHeight +
             _currentRotation * (-Vector3.forward * distance);
-
-        // if (bounder != null)
-        // {
-        //     ConstraintToBounds();
-        // }
-
-        // TODO: Add Raycast to avoid collide with objects in the scene
     }
 }

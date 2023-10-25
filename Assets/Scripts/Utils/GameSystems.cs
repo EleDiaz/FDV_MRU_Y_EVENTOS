@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/GameSystemConfig", order = 1)]
+[CreateAssetMenu(fileName = "GameData", menuName = "Systems/GameSystemConfig", order = 1)]
 public class GameSystems : ScriptableObject
 {
     [InfoBox("This Scriptable objects require to have SystemData as parent class")]

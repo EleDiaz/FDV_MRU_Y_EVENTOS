@@ -185,9 +185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff517d561a4990d46ab857a3ba848236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxWalkSpeed: 1
-  maxRunSpeed: 2
-  acceleration: 0.5
+  walkSpeed: 5
+  runSpeed: 15
   rotationSpeed: 1
   airControl: 0.3
   timeToResetCamera: 4

@@ -29,7 +29,7 @@ public class DoorMovement : MonoBehaviour
         }
     }
 
-    void OpenDoor() {
+    public void OpenDoor() {
         _openingDoor = true;
     }
 }
